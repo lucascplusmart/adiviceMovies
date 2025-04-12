@@ -39,7 +39,7 @@ adviceMovies/
 
 ## 🧩 Banco de Dados - SQLite
 
-O banco de dados é um arquivo local SQLite (`filmes.db`), gerenciado com SQLAlchemy.
+O banco de dados é um arquivo local SQLite (`database.db`), gerenciado com SQLAlchemy.
 
 ### Principais tabelas:
 
@@ -47,8 +47,9 @@ O banco de dados é um arquivo local SQLite (`filmes.db`), gerenciado com SQLAlc
 - `t_filmes`: Filmes disponíveis  
 - `t_atores`: Atores  
 - `t_diretores`: Diretores  
-- `t_usuario_filmes_assistidos`: Relacionamento de filmes assistidos pelos usuários  
-
+- `t_usuario_filmes_assistidos`: Relacionamento de filmes assistidos pelos usuários
+#### DER (Diagrama Entidade-Relacionamento):
+![DRE](https://github.com/user-attachments/assets/bf2dfb3a-5b54-4cb8-822a-14573e120a62)
 
 ## 🚀 Endpoints da API
 
