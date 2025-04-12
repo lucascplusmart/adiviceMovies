@@ -1,5 +1,8 @@
 from sqlalchemy.orm import Session
-from schemas.movies import Filme, UsuarioFilmesAssistidos
+from schemas.movies import Filme, Diretor, Ator ,UsuarioFilmesAssistidos # Certifique-se de importar
+
+from sqlalchemy import or_
+
 
 
 def listar_filmes(session: Session):
@@ -44,21 +47,21 @@ def buscar_preferencias_usuario(session: Session, usuario_id: int):
 def buscar_filmes_por_preferencias(session: Session, preferencias: dict, ids_assistidos: list[int]):
     query = session.query(Filme).distinct()
 
+    condicoes = []
+
     if preferencias["generos"]:
-        # IN
-        query = query.filter(Filme.genero.in_(preferencias["generos"]))
+        condicoes.append(Filme.genero.in_(preferencias["generos"]))
 
     if preferencias["diretores"]:
-        # exist
-        query = query.join(Filme.diretores).filter(Filme.diretores.any(id__in=preferencias["diretores"]))
+        condicoes.append(Filme.diretores.any(Diretor.id.in_(preferencias["diretores"])))
 
     if preferencias["atores"]:
-        # exist
-        query = query.join(Filme.atores).filter(Filme.atores.any(id__in=preferencias["atores"]))
+        condicoes.append(Filme.atores.any(Ator.id.in_(preferencias["atores"])))
+
+    if condicoes:
+        query = query.filter(or_(*condicoes))  # Aplica OR entre as preferências
 
     if ids_assistidos:
-        # Not IN
-        query = query.filter(~Filme.id.in_(ids_assistidos))
+        query = query.filter(~Filme.id.in_(ids_assistidos))  # Exclui os já assistidos
 
     return query.all()
- 
