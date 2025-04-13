@@ -148,5 +148,5 @@ Response:
 3. Execute o comando abaixo para construir a imagem e subir o container:
 
 ~~~bash
-docker-compose up --build
+docker compose up --build
 ~~~

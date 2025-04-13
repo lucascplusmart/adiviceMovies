@@ -2,12 +2,14 @@ version: '3.9'
 
 services:
   api:
+    container_name: fastapi-filmes
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: fastapi-filmes
     ports:
       - "8000:8000"
     volumes:
       - ./server:/app
-    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
